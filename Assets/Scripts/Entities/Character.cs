@@ -13,7 +13,6 @@ public class Character : MonoBehaviour, IMoveable
     private float horizontalInput;
     private float verticalInput;
     [SerializeField] private Transform orientation;
-
     #endregion
 
     #region PUBLIC_METHODS
