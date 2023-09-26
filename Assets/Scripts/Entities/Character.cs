@@ -10,8 +10,10 @@ public class Character : MonoBehaviour, IMoveable
 
     #region PRIVATE_PROPERTIES
     [SerializeField] private float _movementSpeed = 5f;
+    [SerializeField] private float jumpforce = 10f;
     private float horizontalInput;
     private float verticalInput;
+    private Rigidbody rb;
     [SerializeField] private Transform orientation;
     #endregion
 
@@ -20,6 +22,11 @@ public class Character : MonoBehaviour, IMoveable
     #endregion
 
     #region UNITY_METHODS
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     private void Update()
     {
         UpdateInput();
@@ -28,6 +35,11 @@ public class Character : MonoBehaviour, IMoveable
     private void FixedUpdate()
     {
         MovePlayer();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up * jumpforce,ForceMode.Impulse);
+                
+        }
     }
     #endregion
 
