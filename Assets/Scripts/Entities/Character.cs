@@ -6,6 +6,7 @@ public class Character : MonoBehaviour, IMoveable
 {
     #region PUBLIC_PROPERTIES
     public float MovementSpeed => _movementSpeed;
+    public AudioSource audioPlayer;
     #endregion
 
     #region PRIVATE_PROPERTIES
@@ -26,6 +27,7 @@ public class Character : MonoBehaviour, IMoveable
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioPlayer = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -39,6 +41,15 @@ public class Character : MonoBehaviour, IMoveable
         {
             rb.AddForce(Vector3.up * jumpforce,ForceMode.Impulse);
                 
+        }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Tree")
+        {
+            Debug.Log("ACAAA");
+            audioPlayer.Play();
         }
     }
     #endregion
