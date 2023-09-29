@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
         move = _cameraTransform.forward * move.z + _cameraTransform.right * move.x;
         _controller.Move(move * Time.deltaTime * _playerSpeed);
 
- 
         if (_inputManager.IsJumpPressed() && _groundedPlayer)
         {
             _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);

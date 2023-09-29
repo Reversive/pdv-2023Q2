@@ -14504,7 +14504,7 @@ GameObject:
   - component: {fileID: 1051130633}
   - component: {fileID: 1051130635}
   - component: {fileID: 1051130634}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14568,7 +14568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpeed: 5
-  _jumpHeight: 1
+  _jumpHeight: 1.5
   _gravityValue: -9.81
 --- !u!143 &1051130635
 CharacterController:
@@ -14592,9 +14592,9 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_StepOffset: 0.25
+  m_SkinWidth: 0.02
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1053218414
 GameObject:
@@ -15729,7 +15729,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1176891787}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18595,7 +18595,7 @@ GameObject:
   - component: {fileID: 1395170035}
   - component: {fileID: 1395170034}
   - component: {fileID: 1395170033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
