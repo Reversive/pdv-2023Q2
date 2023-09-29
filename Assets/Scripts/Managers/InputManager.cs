@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,6 +61,11 @@ public class InputManager : MonoBehaviour
     public bool IsJumpPressed()
     {
         return _playerControls.Player.Jump.triggered;
+    }
+
+    public bool IsFlashlightPressed()
+    {
+        return _playerControls.Player.Flashlight.triggered;
     }
     #endregion
 }
