@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-   public void ButtonPlayPressed() => Invoke("LoadEndgameScene", 3f);
-   private void LoadEndgameScene() => SceneManager.LoadScene(0);
+   public void LoadMenuScene() => SceneManager.LoadScene("Menu");
+   public void LoadLevelScene() => SceneManager.LoadScene("MainScene");
+   public void LoadEndgameScene() => SceneManager.LoadScene("EndGame");
+   public void CloseGame() => Application.Quit();
+   
 }
