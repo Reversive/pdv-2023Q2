@@ -24,4 +24,16 @@ public class EventManager : MonoBehaviour
     }
     #endregion
 
+
+    #region UI_Elements_Update
+
+    public event Action<int, int> OnFlashlightBatteryChange;
+
+    public void FlashlightBatteryChange(int currentBattery, int maxBattery)
+    {
+        if (OnFlashlightBatteryChange != null) OnFlashlightBatteryChange(currentBattery,maxBattery);
+    }
+
+    #endregion
+
 }
