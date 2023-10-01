@@ -8,6 +8,8 @@ public class Flashlight : MonoBehaviour, IListener
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private int _battery;
     [SerializeField] private int _maxBattery;
+    [SerializeField] private int _chargeSpeed;
+    [SerializeField] private int _dischargeSpeed;
     private AudioSource _audioSource;
     private InputManager _inputManager;
     #endregion
@@ -17,7 +19,7 @@ public class Flashlight : MonoBehaviour, IListener
     private void BatteryChange(int delta)
     {
         
-        int auxBat = _battery + delta;
+        double auxBat = _battery +  Time.deltaTime * delta;
         if (_battery < 0)
         {
             _battery = 0;
@@ -27,7 +29,7 @@ public class Flashlight : MonoBehaviour, IListener
         }
         else
         {
-            _battery = auxBat;
+            _battery = (int)auxBat;
         }
         
     } 
@@ -41,11 +43,11 @@ public class Flashlight : MonoBehaviour, IListener
         
         if (_light.enabled)
         {
-            BatteryChange(-3);
+            BatteryChange(-DischargeSpeed);
         }
         else
         {
-            BatteryChange(5);
+            BatteryChange(ChargeSpeed);
         }
         EventManager.instance.FlashlightBatteryChange(Battery, MaxBattery);
 
@@ -59,6 +61,9 @@ public class Flashlight : MonoBehaviour, IListener
 
     public int Battery => _battery;
     public int MaxBattery => _maxBattery;
+
+    public int ChargeSpeed => _chargeSpeed;
+    public int DischargeSpeed => _dischargeSpeed;
     
     #endregion
 
