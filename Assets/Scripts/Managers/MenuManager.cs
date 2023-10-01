@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using static Enums;
 public class MenuManager : MonoBehaviour
 {
-   public void LoadMenuScene() => SceneManager.LoadScene("Menu");
-   public void LoadLevelScene() => SceneManager.LoadScene("MainScene");
-   public void LoadEndgameScene() => SceneManager.LoadScene("EndGame");
+   public void LoadMenuScene() => SceneManager.LoadScene((int) Levels.MainMenu);
+   public void LoadLevelScene() => SceneManager.LoadScene((int) Levels.Level_1);
+   public void LoadEndgameScene() => SceneManager.LoadScene((int) Levels.Defeat);
    public void CloseGame() => Application.Quit();
    
 }
