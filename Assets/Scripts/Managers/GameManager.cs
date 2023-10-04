@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        EventManager.instance.OnGameOver += OnGameOver;
+        EventManager.Instance.OnGameOver += OnGameOver;
         _gameoverMessage.text = string.Empty;
     }
 

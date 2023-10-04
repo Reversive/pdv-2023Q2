@@ -12,24 +12,23 @@ public class Flashlight : MonoBehaviour, IListener
     [SerializeField] private int _dischargeSpeed;
     private AudioSource _audioSource;
     private InputManager _inputManager;
+    private EventManager _eventManager;
     #endregion
 
     #region PRIVATE_METHODS
-
     private void BatteryChange(int delta)
     {
-        
-        double auxBat = _battery +  Time.deltaTime * delta;
+        float change = _battery + Time.deltaTime * delta;
         if (_battery < 0)
         {
             _battery = 0;
-        }else if (_battery > MaxBattery)
+        }else if (_battery > _maxBattery)
         {
-            _battery = MaxBattery;
+            _battery = _maxBattery;
         }
         else
         {
-            _battery = (int)auxBat;
+            _battery = (int)(change);
         }
         
     } 
@@ -43,13 +42,13 @@ public class Flashlight : MonoBehaviour, IListener
         
         if (_light.enabled)
         {
-            BatteryChange(-DischargeSpeed);
+            BatteryChange(-_dischargeSpeed);
         }
         else
         {
-            BatteryChange(ChargeSpeed);
+            BatteryChange(_chargeSpeed);
         }
-        EventManager.instance.FlashlightBatteryChange(Battery, MaxBattery);
+        _eventManager.FlashlightBatteryChange(_battery, _maxBattery);
 
     }
 
@@ -94,8 +93,8 @@ public class Flashlight : MonoBehaviour, IListener
     private void Start()
     {
         _inputManager = InputManager.Instance;
+        _eventManager = EventManager.Instance;
         _battery = MaxBattery;
-        EventManager.instance.FlashlightBatteryChange(Battery, MaxBattery);
         InitAudioSource();
     }
 
@@ -107,8 +106,12 @@ public class Flashlight : MonoBehaviour, IListener
             PlayOneShot();
         }
 
-        UpdateBattery();
         
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateBattery();
     }
     #endregion
 }
