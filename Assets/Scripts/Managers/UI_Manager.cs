@@ -11,7 +11,7 @@ public class UI_Manager : MonoBehaviour
    [SerializeField] private Text _batteryPercent;
 
    private void OnFlashlightBatteryChange(int currentBat, int maxBat)
-   { 
+   {
       float percentage = (float)currentBat / (float)maxBat;
       _batteryBar.fillAmount = (float)currentBat / (float)maxBat;
       _batteryPercent.text = $"{ (currentBat * 100 /maxBat)}%";
@@ -23,7 +23,7 @@ public class UI_Manager : MonoBehaviour
 
    private void Start()
    {
-      EventManager.instance.OnFlashlightBatteryChange += OnFlashlightBatteryChange;
+      EventManager.Instance.OnFlashlightBatteryChange += OnFlashlightBatteryChange;
    }
 
    #endregion

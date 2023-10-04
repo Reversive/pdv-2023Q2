@@ -1,17 +1,35 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    static public EventManager instance;
+
+    #region PRIVATE_PROPERTIES
+    private static EventManager _instance;
+    #endregion
+
+    #region PUBLIC_PROPERTIES
+    public static EventManager Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+    #endregion
 
     #region UNITY_EVENTS
     private void Awake()
     {
-        if (instance != null) Destroy(this);
-        instance = this;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this);
+            _instance = this;
+        }
     }
     #endregion
 
