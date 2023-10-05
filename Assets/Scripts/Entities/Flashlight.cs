@@ -38,6 +38,7 @@ public class Flashlight : MonoBehaviour, IListener
         if (_battery <= 0)
         {
             _light.enabled = false;
+            PlayOneShot();
         }
         
         if (_light.enabled)

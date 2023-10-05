@@ -67,5 +67,10 @@ public class InputManager : MonoBehaviour
     {
         return _playerControls.Player.Flashlight.triggered;
     }
+
+    public bool IsInteractPressed()
+    {
+        return _playerControls.Player.Pickup.triggered;
+    }
     #endregion
 }
