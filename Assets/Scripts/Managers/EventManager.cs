@@ -53,5 +53,16 @@ public class EventManager : MonoBehaviour
     }
 
     #endregion
+    
+    #region UI_Sounds_Update
+
+    public event Action<AudioClip> OnChangePlayerAudio;
+
+    public void ChangePlayerAudio(AudioClip music)
+    {
+        if (OnChangePlayerAudio != null) OnChangePlayerAudio(music);
+    }
+
+    #endregion
 
 }
