@@ -7,6 +7,7 @@ public class PageManager : MonoBehaviour
     #region PRIVATE_PROPERTIES
     private static PageManager _instance;
     private int _collectedPages;
+    private MenuManager _menuManager;
     #endregion
     #region PUBLIC_PROPERTIES
     public static PageManager Instance { get { return _instance; } }
@@ -16,6 +17,16 @@ public class PageManager : MonoBehaviour
         set { _collectedPages = value; }
     }
     #endregion
+
+    IEnumerator LoadGameWin()
+    {
+        yield return new WaitForSeconds(1f);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _collectedPages = 0;
+        _menuManager.LoadWinGameScene();
+
+    }
 
     #region UNITY_METHODS
     private void Awake()
@@ -28,10 +39,15 @@ public class PageManager : MonoBehaviour
     private void Start()
     {
         _collectedPages = 0;
+        _menuManager = GetComponent<MenuManager>();
+    }
+
+    private void Update()
+    {
+        if(_collectedPages == 1)
+        {
+            StartCoroutine(LoadGameWin());
+        }
     }
     #endregion
-
-
-
-
 }

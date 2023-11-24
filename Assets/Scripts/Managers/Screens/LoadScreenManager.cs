@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class LoadScreenManager : MonoBehaviour
 {
     [SerializeField] private Image _progressBar;
-    [SerializeField] private Text _progressText;
 
     private void Start()
     {
@@ -22,8 +22,7 @@ public class LoadScreenManager : MonoBehaviour
         while (!op.isDone)
         {
             progress = op.progress;
-            _progressBar.fillAmount = progress;
-            _progressText.text = $"{progress * 100} %";
+            if(_progressBar) _progressBar.fillAmount = progress;
             yield return null;
         }
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IListener 
 {
-
     AudioClip AudioClip { get; }
     AudioSource AudioSource { get; }
 

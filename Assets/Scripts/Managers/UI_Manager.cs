@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,22 +9,42 @@ public class UI_Manager : MonoBehaviour
 {
    #region FLASHLIGHT_LOGIC
    [SerializeField] private Image _batteryBar;
-   [SerializeField] private Text _batteryPercent;
+   [SerializeField] private TextMeshProUGUI _batteryPercent;
+   [SerializeField] private List<Sprite> _batteryImages;
+   private MenuManager _menuManager;
 
    private void OnFlashlightBatteryChange(int currentBat, int maxBat)
    {
       float percentage = (float)currentBat / (float)maxBat;
-      _batteryBar.fillAmount = (float)currentBat / (float)maxBat;
-      _batteryPercent.text = $"{ (currentBat * 100 /maxBat)}%";
 
-   }
-   #endregion
-   
-   #region UNITY_EVENTS
+        int index = Mathf.FloorToInt((1f - percentage) * _batteryImages.Count);
+        index = Mathf.Clamp(index, 0, _batteryImages.Count - 1);
+        if(_batteryPercent != null)
+            _batteryBar.sprite = _batteryImages[index];
+    }
 
-   private void Start()
+    IEnumerator LoadGameOver()
+    {
+        yield return new WaitForSeconds(3f);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _menuManager.LoadLoseGameScene();
+
+    }
+
+    private void OnGameOver(bool isVictory)
+    {
+        
+    }
+    #endregion
+
+    #region UNITY_EVENTS
+
+    private void Start()
    {
+      //_menuManager = GetComponent<MenuManager>();
       EventManager.Instance.OnFlashlightBatteryChange += OnFlashlightBatteryChange;
+      EventManager.Instance.OnGameOver += OnGameOver;
    }
 
    #endregion

@@ -27,7 +27,6 @@ public class EventManager : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(this);
             _instance = this;
         }
     }

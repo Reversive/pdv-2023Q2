@@ -29,7 +29,6 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(this);
             _instance = this;
         }
         _playerControls = new PlayerControls();
