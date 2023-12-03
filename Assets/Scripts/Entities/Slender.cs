@@ -18,6 +18,7 @@ public class Slender : MonoBehaviour
     [SerializeField] private float _teleportDistance;
     [SerializeField] private float _teleportCooldown;
     [SerializeField] private float _returnCooldown;
+    [SerializeField] private Cinemachine.CinemachineVirtualCamera _playerCamera;
     private MenuManager _menuManager;
     private bool _isCaught = false;
     private Vector3 _basePos;
@@ -47,11 +48,11 @@ public class Slender : MonoBehaviour
 
     IEnumerator LoadGameOver()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.5f);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _transition.SetTrigger("start");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         _menuManager.LoadLoseGameScene();
     }
 
@@ -91,6 +92,7 @@ public class Slender : MonoBehaviour
             _navMeshAgent.isStopped = true;
             _isCaught = true;
             _static.SetActive(false);
+            _playerCamera.enabled = false;
             StartCoroutine(LoadGameOver());
         }
         else
