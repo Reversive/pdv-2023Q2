@@ -71,5 +71,10 @@ public class InputManager : MonoBehaviour
     {
         return _playerControls.Player.Pickup.triggered;
     }
+
+    public bool IsPausePressed()
+    {
+        return _playerControls.Player.Pause.triggered;
+    }
     #endregion
 }

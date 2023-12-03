@@ -11,6 +11,8 @@ public class UI_Manager : MonoBehaviour
    [SerializeField] private Image _batteryBar;
    [SerializeField] private TextMeshProUGUI _batteryPercent;
    [SerializeField] private List<Sprite> _batteryImages;
+   [SerializeField] private GameObject _pauseMenu;
+   private InputManager _inputManager;
    private MenuManager _menuManager;
 
    private void OnFlashlightBatteryChange(int currentBat, int maxBat)
@@ -45,7 +47,28 @@ public class UI_Manager : MonoBehaviour
       //_menuManager = GetComponent<MenuManager>();
       EventManager.Instance.OnFlashlightBatteryChange += OnFlashlightBatteryChange;
       EventManager.Instance.OnGameOver += OnGameOver;
+      _inputManager = GetComponent<InputManager>();
    }
 
-   #endregion
+    private void Update()
+    {
+        if(_inputManager.IsPausePressed())
+        {
+            _pauseMenu.SetActive(!_pauseMenu.activeSelf);
+            if (_pauseMenu.activeSelf)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Time.timeScale = 1f;
+            }
+        }
+    }
+
+    #endregion
 }
