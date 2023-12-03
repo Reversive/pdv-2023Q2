@@ -9,6 +9,7 @@ public class PageManager : MonoBehaviour
     private int _collectedPages;
     private MenuManager _menuManager;
     [SerializeField] private List<GameObject> _pages;
+    [SerializeField] private Animator _transition;
     #endregion
     #region PUBLIC_PROPERTIES
     public static PageManager Instance { get { return _instance; } }
@@ -21,6 +22,7 @@ public class PageManager : MonoBehaviour
 
     IEnumerator LoadGameWin()
     {
+        _transition.SetTrigger("start");
         yield return new WaitForSeconds(1f);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

@@ -9,6 +9,7 @@ public class Slender : MonoBehaviour
     private Transform _target;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
+    [SerializeField] private Animator _transition;
     [SerializeField] private float _speed;
     [SerializeField] private GameObject _static;
     [SerializeField] private float _caughtDistance;
@@ -49,6 +50,8 @@ public class Slender : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        _transition.SetTrigger("start");
+        yield return new WaitForSeconds(1.5f);
         _menuManager.LoadLoseGameScene();
     }
 
