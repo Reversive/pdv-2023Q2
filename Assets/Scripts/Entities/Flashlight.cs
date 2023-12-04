@@ -33,7 +33,17 @@ public class Flashlight : MonoBehaviour, IListener
         
     } 
 
-    private void UpdateBattery()
+    public void AddBattery(int value)
+    {
+        _battery += value;
+        if (_battery > _maxBattery)
+        {
+            _battery = _maxBattery;
+        }
+        _eventManager.FlashlightBatteryChange(_battery, _maxBattery);
+    }
+
+    public void UpdateBattery(int delta)
     {
         if (_battery <= 0)
         {
@@ -41,14 +51,7 @@ public class Flashlight : MonoBehaviour, IListener
             PlayOneShot();
         }
         
-        if (_light.enabled)
-        {
-            BatteryChange(-_dischargeSpeed);
-        }
-        else
-        {
-            BatteryChange(_chargeSpeed);
-        }
+        BatteryChange(delta);
         _eventManager.FlashlightBatteryChange(_battery, _maxBattery);
 
     }
@@ -112,7 +115,7 @@ public class Flashlight : MonoBehaviour, IListener
 
     private void FixedUpdate()
     {
-        UpdateBattery();
+        UpdateBattery(-_dischargeSpeed);
     }
     #endregion
 }
