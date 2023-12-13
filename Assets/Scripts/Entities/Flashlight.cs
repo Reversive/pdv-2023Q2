@@ -45,7 +45,7 @@ public class Flashlight : MonoBehaviour, IListener
 
     public void UpdateBattery(int delta)
     {
-        if (_battery <= 0)
+        if (_battery <= 0 && _light.enabled)
         {
             _light.enabled = false;
             PlayOneShot();
