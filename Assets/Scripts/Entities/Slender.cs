@@ -9,6 +9,8 @@ public class Slender : MonoBehaviour
     private Transform _target;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
+    [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private AudioManager _audioManager;
     [SerializeField] private Animator _transition;
     [SerializeField] private float _speed;
     [SerializeField] private GameObject _static;
@@ -76,6 +78,7 @@ public class Slender : MonoBehaviour
                     Vector3 randomPos = Random.insideUnitSphere * _teleportDistance;
                     randomPos.y = transform.position.y;
                     transform.position = _target.position + randomPos;
+                    _audioManager.ChangePlayerAudio(_audioClip);
                 } else
                 {
                     _isReturning = true;

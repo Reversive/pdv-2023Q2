@@ -48,7 +48,6 @@ public class Character : MonoBehaviour, IMoveable
     {
         if(collision.gameObject.tag == "Tree")
         {
-            Debug.Log("ACAAA");
             audioPlayer.Play();
         }
     }
