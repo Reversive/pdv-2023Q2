@@ -57,7 +57,7 @@ public class PageManager : MonoBehaviour
 
     private void Update()
     {
-        if(_collectedPages == 1)
+        if(_collectedPages == 8)
         {
             StartCoroutine(LoadGameWin());
         }
