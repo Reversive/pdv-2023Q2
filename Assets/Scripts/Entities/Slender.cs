@@ -17,7 +17,7 @@ public class Slender : MonoBehaviour
     [SerializeField] private GameObject _materialGameObject;
 
     int shaderProperty;
-    [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private AudioClip _endGameClip;
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private Animator _transition;
     [SerializeField] private float _speed;
@@ -29,6 +29,7 @@ public class Slender : MonoBehaviour
     [SerializeField] private float _teleportCooldown;
     [SerializeField] private float _returnCooldown;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera _playerCamera;
+    private AudioSource _audioSource;
     private MenuManager _menuManager;
     private bool _isCaught = false;
     private Vector3 _basePos;
@@ -47,7 +48,7 @@ public class Slender : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _speed;
         _animator = GetComponent<Animator>();
-        if(_static != null)
+        if (_static != null)
         {
             _static.SetActive(false);
         }
@@ -58,6 +59,7 @@ public class Slender : MonoBehaviour
         _menuManager = GetComponent<MenuManager>();
         shaderProperty = Shader.PropertyToID("_cutoff");
         _renderer = _materialGameObject.GetComponent<Renderer>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private bool shouldTeleport = false;
@@ -88,8 +90,8 @@ public class Slender : MonoBehaviour
                 shouldTeleport = false;
                 isFadeOver = true;
             }
-            
-            _renderer.materials.ToList().ForEach(m => m.SetFloat(shaderProperty, fadeIn.Evaluate(Mathf.InverseLerp(0, spawnEffectTime, timer))));
+
+            //_renderer.materials.ToList().ForEach(m => m.SetFloat(shaderProperty, fadeIn.Evaluate(Mathf.InverseLerp(0, spawnEffectTime, timer))));
 
             if (isFadeOver && !_isReturning)
             {
@@ -97,29 +99,32 @@ public class Slender : MonoBehaviour
                 randomPos.y = transform.position.y;
                 transform.position = _target.position + randomPos;
                 isFadeOver = false;
-            } else if (isFadeOver && _isReturning)
+            }
+            else if (isFadeOver && _isReturning)
             {
                 transform.position = _basePos;
                 isFadeOver = false;
                 _isReturning = false;
             }
         }
-        
+
         _animator.SetBool("isFollowing", true);
         _teleportTimer -= Time.deltaTime;
-        if(_teleportTimer <= 0f)
+        if (_teleportTimer <= 0f)
         {
-            if(_isReturning)
+            if (_isReturning)
             {
                 _teleportTimer = _teleportCooldown;
                 shouldTeleport = true;
-            } else
-            { 
+            }
+            else
+            {
                 float random = Random.value;
-                if(random < _chaseProbability)
+                if (random < _chaseProbability)
                 {
                     shouldTeleport = true;
-                } else
+                }
+                else
                 {
                     _isReturning = true;
                     _teleportTimer = _returnCooldown;
@@ -130,13 +135,14 @@ public class Slender : MonoBehaviour
         float distance = Vector3.Distance(transform.position, _target.position);
         if (distance < _caughtDistance)
         {
+            _audioSource.Play();
             _animator.SetBool("isCaught", true);
             _animator.SetBool("isFollowing", false);
             _navMeshAgent.isStopped = true;
             _isCaught = true;
             _static.SetActive(false);
             _playerCamera.enabled = false;
-            StartCoroutine(LoadGameOver());
+            StartCoroutine(Waiter());
         }
         else
         {
@@ -144,12 +150,19 @@ public class Slender : MonoBehaviour
             if (distance < _staticDistance)
             {
                 _static.SetActive(true);
-            }  else
+            }
+            else
             {
                 _static.SetActive(false);
             }
         }
-        
+
     }
     #endregion
+
+    IEnumerator Waiter()
+    {
+        yield return new WaitForSeconds(1);
+        StartCoroutine(LoadGameOver());
+    }
 }
